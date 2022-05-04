@@ -19,12 +19,14 @@ Note
 ------------
 You can add variables in Gitlab at the group level from Settings -> CICD -> Variables
 
+```
 * CI_REGISTRY_USER: registry_user
 * CI_REGISTRY_PASSWORD: password
 * CI_GITLAB_USERNAME: cicd_user
 * CI_GITLAB_PASSWORD: password
 * CI_K8S_CONFIG_DEV: (included dev Cluster kube config)
 * CI_K8S_CONFIG_PROD: (included prod Cluster kube config)
+```
 
 Stages designed for mono projects:
 
