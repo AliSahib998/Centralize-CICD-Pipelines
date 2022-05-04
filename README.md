@@ -6,7 +6,7 @@ Creation of centralized pipelines for Java, React based applications
 Basic settings
 ------------
 * Template jobs for Pipeline (for mono-repo / multi-module projects)
-* Included python script for generation dynamic pipeline for multi-module projects
+* Included generation dynamic pipeline for multi-module projects (https://github.com/SamirNabadov/Dynamic-Pipeline-Generation)
 * Helm Charts (Added to the deploy folder inside each project)
 * Used jib and kaniko to build and push images to gitlab registry
 * Demo projects are java, react type projects. (The demo projects do not belong to me, only the CI and CD side)
