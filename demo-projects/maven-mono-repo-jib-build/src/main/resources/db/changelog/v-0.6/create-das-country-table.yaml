@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-das-country-table-id
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: DAS_COUNTRY
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(19)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: DAS_COUNTRY_PK
+                    nullable: false
+              - column:
+                  name: lang
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: TIMESTAMP(6)
+              - column:
+                  name: COUNTRY_NAME
+                  type: VARCHAR2(255 CHAR)
+              - column:
+                  name: ISO_COUNTRY_NUM_CD
+                  type: VARCHAR2(255 CHAR)
+              - column:
+                  name: EQUIVALANCE_ENGLISH
+                  type: VARCHAR2(255 CHAR)

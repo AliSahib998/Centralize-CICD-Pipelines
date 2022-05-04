@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id:  create-das-currency-sequence
+      author:  ayaznacafli
+      changes:
+        - createSequence:
+            incrementBy:  1
+            minValue:  1
+            ordered:  true
+            sequenceName:  DAS_CURRENCY_SEQ
+            startValue:  1

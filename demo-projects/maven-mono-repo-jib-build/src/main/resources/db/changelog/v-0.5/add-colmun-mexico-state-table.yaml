@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-colmun-mexico_state-id
+      author: ayaznacafli
+      changes:
+        - addColumn:
+            tableName: mexico_state
+            columns:
+              - column:
+                  name: CREATE_DATE
+                  type: TIMESTAMP(6)

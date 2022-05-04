@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-modify-table-id
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: MODIFYS
+            columns:
+              - column:
+                  name: ID
+                  type: NUMBER(38, 0)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: MODIFY_PK
+                    nullable: false
+              - column:
+                  name: DATA
+                  type: VARCHAR(3999)
+              - column:
+                  name: REFERANCE_NUMBER
+                  type: VARCHAR(255)
+              - column:
+                  name: CREATE_DATE
+                  type: TIMESTAMP(6)

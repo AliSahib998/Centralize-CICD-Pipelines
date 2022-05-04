@@ -1,0 +1,20 @@
+application:
+  wu-url: https://wugateway2.westernunion.net
+  identifier: WGHHAZ1741P
+  counterId: F4C6
+
+client:
+  ssl:
+    trust-store: prod.pfx
+    trust-store-password: d8eef862-62f0-4b59-ae8d-31e869c66291
+    trust-store-alias: f0d8c1a0-92c2-11eb-a8b3-0242ac130003
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  datasource:
+    url: jdbc:oracle:thin:@(DESCRIPTION =(FAILOVER=on)(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = uniextdbprim01)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = uniextdbstby01)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = apshasrv)))
+    username: MoneyTransfer
+    password: gM0RlbdRB7Qnt2!!A8ILZ
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    show-sql: false

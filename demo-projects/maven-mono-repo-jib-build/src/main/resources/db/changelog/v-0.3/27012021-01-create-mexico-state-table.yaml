@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-MexicoState-table
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: mexico_state
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(19)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: mexico_state_pk
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false

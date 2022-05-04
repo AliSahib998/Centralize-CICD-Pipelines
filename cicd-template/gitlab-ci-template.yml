@@ -1,0 +1,148 @@
+stages:
+  - test
+  - release
+  - deploy
+  - generate-child-pipeline
+  - trigger-child-pipeline
+
+# Dynamic Pipeline Generation with Python Script
+
+generate-child-pipeline:
+  stage: generate-child-pipeline
+  image: bitnami/python
+  script:
+    - git -c http.sslVerify=false clone https://$CI_GITLAB_USERNAME:$CI_GITLAB_PASSWORD@gitlab.local.az/devops/cicd-template.git
+    - python3 cicd-template/dynamicPipelineGenerator/main.py
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - $CI_PROJECT_MODE_MULTI_MODULE == "TRUE"
+  artifacts:
+    paths:
+      - child-pipeline-gitlab-ci.yml
+
+trigger-child-pipeline:
+  stage: trigger-child-pipeline
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - $CI_PROJECT_MODE_MULTI_MODULE == "TRUE"
+  trigger:
+    include:
+      - artifact: child-pipeline-gitlab-ci.yml
+        job: generate-child-pipeline
+    strategy: depend
+
+# Build Maven with jib, Gradle mono repo with jib
+
+.release_jib_maven:
+  stage: release
+  image: maven:3-jdk-8
+  variables:
+    MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  script:
+    - mvn compile jib:build -Djib.to.image=$CI_REGISTRY_IMAGE:$CI_PIPELINE_ID -Djib.to.auth.username=$CI_REGISTRY_USER -Djib.to.auth.password=$CI_REGISTRY_PASSWORD
+
+.release_jib_gradle_mono_repo:
+  stage: release
+  image: openjdk:11-jdk-slim
+  variables:
+    GRADLE_OPTS: "-Dgradle.user.home=.gradle -Dorg.gradle.daemon=false"
+  before_script:
+    - chmod +x gradlew
+  script:
+    - ./gradlew jib -Djib.to.image=$CI_REGISTRY_IMAGE -Djib.to.tags=$CI_PIPELINE_ID -Djib.to.auth.username=$CI_REGISTRY_USER -Djib.to.auth.password=$CI_REGISTRY_PASSWORD
+
+release_gradle:
+  extends: .release_jib_gradle_mono_repo
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - '$CI_PROJECT_MODE_MONO_REPO == "TRUE" && $CI_APPLICATION_TYPE_GRADLE == "TRUE" && $CI_RELEASE_TYPE_JIB == "TRUE"'
+
+release_maven:
+  extends: .release_jib_maven
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - '$CI_PROJECT_MODE_MONO_REPO == "TRUE" && $CI_APPLICATION_TYPE_MAVEN == "TRUE" && $CI_RELEASE_TYPE_JIB == "TRUE"'
+
+# Release Front, Maven with Kaniko ------------------------------------------------------------------------------------------------------------------------
+
+.release_image_kaniko:
+  stage: release
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(echo -n ${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}| base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor   --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --insecure --skip-tls-verify  --destination ${CI_REGISTRY}\/${CI_PROJECT_NAMESPACE}\/${CI_PROJECT_NAME}:$CI_PIPELINE_ID
+
+release_kaniko:
+  extends: .release_image_kaniko
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - '$CI_PROJECT_MODE_MONO_REPO == "TRUE" && $CI_APPLICATION_TYPE_MAVEN == "TRUE" && $CI_RELEASE_TYPE_KANIKO == "TRUE"'
+
+release_kaniko_frontend:
+  extends: .release_image_kaniko
+  only:
+    refs:
+      - "develop"
+      - "master"
+    variables:
+      - '$CI_PROJECT_TYPE_FRONTEND == "TRUE" && $CI_RELEASE_TYPE_KANIKO == "TRUE"'
+
+# Deploy ALL -----------------------------------------------------------------------------------------------------------------------------------------
+
+.deploy:
+  stage: deploy
+  image: dtzar/helm-kubectl
+  environment:
+    name: $CI_COMMIT_BRANCH
+    url: http://${CI_HOSTNAME}/
+  script:
+    - sed -i "s/tag:.*/tag:\ ${CI_PIPELINE_ID}/" ./deploy/helm-charts/${CI_COMMIT_BRANCH}.yaml
+    - helm upgrade ${CI_PROJECT_NAME} ./deploy/helm-charts --install --values=./deploy/helm-charts/${CI_COMMIT_BRANCH}.yaml
+
+.before_script:
+  before_script:
+    - mkdir -p ~/.kube; echo "$CI_KUBE_CONFIG" > ~/.kube/config; chmod 400 ~/.kube/config
+
+deploy_dev:
+  extends: 
+    - .deploy
+    - .before_script
+  variables:
+    CI_HOSTNAME: dev-$CI_PROJECT_NAME.local.az
+    CI_KUBE_CONFIG: $CI_K8S_CONFIG_DEV
+  only:
+    refs:
+      - "develop"
+  resource_group: development
+
+deploy_prod:
+  extends: 
+    - .deploy
+    - .before_script
+  variables:
+    CI_HOSTNAME: $CI_PROJECT_NAME.local.az
+    CI_KUBE_CONFIG: $CI_K8S_CONFIG_PROD
+  only:
+    refs:
+      - "master"
+  resource_group: production
+

@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-colmun-iso-country-table-id
+      author: ayaznacafli
+      changes:
+        - addColumn:
+            tableName: iso_country
+            columns:
+              - column:
+                  name: TYPE
+                  type: VARCHAR(255)

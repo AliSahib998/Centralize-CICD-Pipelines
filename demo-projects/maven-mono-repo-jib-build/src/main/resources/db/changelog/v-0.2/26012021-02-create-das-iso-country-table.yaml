@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 26012021-02
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: das_iso_country
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(38, 0)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: das_iso_pk
+                    nullable: false
+              - column:
+                  name: iso_country_code
+                  type: VARCHAR(255)
+              - column:
+                  name: name_long
+                  type: VARCHAR(255)
+              - column:
+                  name: service_flags
+                  type: VARCHAR(255)
+              - column:
+                  name: do_not_use_this_field
+                  type: VARCHAR(255)
+              - column:
+                  name: iso_country_id
+                  type: NUMBER(38, 0)
+
+        - addForeignKeyConstraint:
+            baseTableName: das_iso_country
+            baseColumnNames: iso_country_id
+            constraintName: das_iso_country_fk
+            referencedTableName: iso_country
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE

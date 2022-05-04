@@ -1,0 +1,20 @@
+application:
+  wu-url: https://66.218.162.7
+  identifier: WGHHAZ1741T
+  counterId: D5TR
+
+client:
+  ssl:
+    trust-store: pi-client.pfx
+    trust-store-password: BAS$!@S87
+    trust-store-alias: westernunionpartnerintegration
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  datasource:
+    url: jdbc:oracle:thin:@apstst:1521:APSTST
+    username: MoneyTransfer
+    password: gM0RlbdRB7Qnt2!!A8ILZ
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    show-sql: false

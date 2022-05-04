@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22012021-02
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: das_delivery
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(38, 0)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: das_delivery_pk
+                    nullable: false
+              - column:
+                  name: destination_code
+                  type: VARCHAR(255)
+              - column:
+                  name: service_code
+                  type: VARCHAR(255)
+              - column:
+                  name: service_name
+                  type: VARCHAR(255)
+              - column:
+                  name: route
+                  type: VARCHAR(255)
+              - column:
+                  name: banner
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+              - column:
+                  name: template_key
+                  type: VARCHAR(255)
+              - column:
+                  name: country_filter
+                  type: VARCHAR(255)
+              - column:
+                  name: exclusion_flags
+                  type: VARCHAR(255)
+              - column:
+                  name: source_min_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: source_max_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: source_incr_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: dest_min_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: dest_max_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: dest_incr_currency
+                  type: NUMBER(38, 0)
+              - column:
+                  name: delivery_id
+                  type: NUMBER(38, 0)
+
+        - addForeignKeyConstraint:
+            baseTableName: das_delivery
+            baseColumnNames: delivery_id
+            constraintName: das_delivery_delivery_fk
+            referencedTableName: delivery
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE

@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-us-state-table
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: us_state
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(38, 0)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: us_state_pk
+                    nullable: false
+              - column:
+                  name: state_name
+                  type: VARCHAR(255)
+              - column:
+                  name: state_code
+                  type: VARCHAR(255)
+              - column:
+                  name: us_state_id
+                  type: NUMBER(38, 0)
+
+        - addForeignKeyConstraint:
+            baseTableName: us_state
+            baseColumnNames: us_state_id
+            constraintName: us_state_das_fk
+            referencedTableName: das_us_state_info
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE

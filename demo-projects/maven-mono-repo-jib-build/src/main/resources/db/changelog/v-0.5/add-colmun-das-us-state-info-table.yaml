@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-colmun-das-us-state-info-id
+      author: ayaznacafli
+      changes:
+        - addColumn:
+            tableName: das_us_state_info
+            columns:
+              - column:
+                  name: CREATE_DATE
+                  type: TIMESTAMP(6)

@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 26012021-01
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: iso_country
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(19)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: iso_country_pk
+                    nullable: false
+              - column:
+                  name: lang
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: TIMESTAMP(6)

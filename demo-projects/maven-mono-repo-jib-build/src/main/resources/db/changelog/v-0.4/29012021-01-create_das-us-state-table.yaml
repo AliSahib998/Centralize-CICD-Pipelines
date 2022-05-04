@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-das-us-state-table
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: das_us_state_info
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(19)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: das_us_state_state_pk
+                    nullable: false
+              - column:
+                  name: lang
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false

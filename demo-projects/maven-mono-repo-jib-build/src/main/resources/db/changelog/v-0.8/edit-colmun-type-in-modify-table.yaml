@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: edit-colmun-type-modify-table
+      author: ayaznacafli
+      changes:
+        - modifyDataType:
+            tableName: MODIFYS
+            columnName:  CREATE_DATE
+            newDataType:  DATE

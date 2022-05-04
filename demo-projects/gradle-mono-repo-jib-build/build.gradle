@@ -1,0 +1,34 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+    id 'com.google.cloud.tools.jib' version '3.1.4'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'io.codefresh'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+jib {
+    allowInsecureRegistries = true
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+}

@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id:  26012021-1440
+      author:  ayaznacafli
+      changes:
+        - createSequence:
+            incrementBy:  1
+            minValue:  1
+            ordered:  true
+            sequenceName:  das_iso_country_seq
+            startValue:  1

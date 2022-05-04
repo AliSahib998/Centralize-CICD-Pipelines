@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-citys-table
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: citys
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(38, 0)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: citys_pk
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+              - column:
+                  name: state_id
+                  type: NUMBER(38, 0)
+
+        - addForeignKeyConstraint:
+            baseTableName: citys
+            baseColumnNames: state_id
+            constraintName: mexico_city_fk
+            referencedTableName: mexico_state
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE

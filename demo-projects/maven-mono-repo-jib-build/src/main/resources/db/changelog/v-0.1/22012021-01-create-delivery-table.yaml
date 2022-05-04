@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22012021-01
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: delivery
+            columns:
+              - column:
+                  name: id
+                  type: NUMBER(19)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: delivery_pk
+                    nullable: false
+              - column:
+                  name: des_country
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: des_currency
+                  type: VARCHAR2(255 CHAR)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: org_currency
+                  type: VARCHAR2(255 CHAR)
+              - column:
+                  name: create_date
+                  type: TIMESTAMP(6)

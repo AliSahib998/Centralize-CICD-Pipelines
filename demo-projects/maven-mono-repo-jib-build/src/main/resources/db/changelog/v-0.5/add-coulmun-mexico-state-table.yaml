@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-colmun-mexico-state-table-id
+      author: ayaznacafli
+      changes:
+        - addColumn:
+            tableName: mexico_state
+            columns:
+              - column:
+                  name: STATE_CODE
+                  type: VARCHAR2(255 CHAR)

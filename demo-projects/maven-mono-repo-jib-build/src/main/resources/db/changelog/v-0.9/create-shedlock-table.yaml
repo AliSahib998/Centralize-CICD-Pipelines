@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-shedlock-table-id
+      author: ayaznacafli
+      changes:
+        - createTable:
+            tableName: SHEDLOCK
+            columns:
+              - column:
+                  name: NAME
+                  type: VARCHAR(3999)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: SHEDLOCK_PK
+                    nullable: false
+              - column:
+                  name: LOCK_UNTIL
+                  type: TIMESTAMP(6)
+              - column:
+                  name: LOCKED_BY
+                  type: VARCHAR(255)
+              - column:
+                  name: LOCKED_AT
+                  type: TIMESTAMP(6)
