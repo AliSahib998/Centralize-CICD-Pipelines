@@ -83,20 +83,20 @@ variables:
   CI_RELEASE_TYPE_KANIKO: "FALSE"
 ```
 
+* There is no need to select a application type for frontend projects
+
 Helm Charts
 ------------
 * The Values file is designed for two branches (Develop / Master)
-* When configmap and secretes are enabled, they are automatically set to the deployment file in the template
-* The TLS have been set up at the Istio gateway (Certificates must be attached in base64 format)
+* When configmap is enabled, it is automatically set to the deployment file in the template
+* To add secrets to the deployment file, they must first be created inside the cluster, then the required data must be set in the values file
 * Consideration of multiple routing in Istio Gateway Virtualservice
-* Settings for certificates and secrets in Values files, generation of certificates and secrets are suitable for non-automated environments
+* The TLS have been set up at the Istio gateway (Certificates must be attached in base64 format). It is not the best practice to write certificates clearly in the Values file, it is better to use tools that automatically generate certificates, such as HashiCorp Vault.
 
 __Requirements__
 ------------
 * Gitlab
 * Kubernetes
-* Helm
-* Python
 
 __Author Information__
 ------------------
