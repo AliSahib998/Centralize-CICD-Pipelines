@@ -13,12 +13,13 @@ image:
   tag: IMAGE_TAG
   pullPolicy: IfNotPresent
 
-# secret key value in the data must be base64
 secrets:
   enabled: false
   data:
-    - key: KEY_NAME
-      value: M1VIS0RqZ1pLQlZqSDZ3WXhEUTM=
+    - name: SECRET_KEY
+      valueFrom:
+        name: secret_name
+        key: SECRET_KEY
 
 configmaps:
   enabled: false

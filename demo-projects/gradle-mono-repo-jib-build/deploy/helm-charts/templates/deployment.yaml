@@ -71,11 +71,11 @@ spec:
           {{- toYaml $.Values.env | nindent 10 }}
   {{- if .Values.secrets.enabled }}
   {{- range .Values.secrets.data }}
-          - name: {{ .key }}
+          - name: {{ .name }}
             valueFrom: 
               secretKeyRef:
-                name: {{ .key }}
-                key: {{ .value }}
+                name: {{ .valueFrom.name }}
+                key: {{ .valueFrom.key }}
   {{- end }}
   {{- end }}
   {{- if .Values.configmaps.enabled }}
