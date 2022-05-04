@@ -15,7 +15,7 @@ Gitlab + Helm + Kubernetes
 ------------
 ![Screenshot](devops.jpeg)
 
-Note
+Gitlab
 ------------
 You can add variables in Gitlab at the group level from Settings -> CICD -> Variables
 
