@@ -5,7 +5,7 @@ stages:
   - generate-child-pipeline
   - trigger-child-pipeline
 
-# Dynamic Pipeline Generation with Python Script
+# Dynamic Pipeline ------------------------------------------------------------------------------------------------------------------------
 
 generate-child-pipeline:
   stage: generate-child-pipeline
@@ -37,7 +37,7 @@ trigger-child-pipeline:
         job: generate-child-pipeline
     strategy: depend
 
-# Build Maven with jib, Gradle mono repo with jib
+# Release Jib
 
 .release_jib_maven:
   stage: release
@@ -76,7 +76,7 @@ release_maven:
     variables:
       - '$CI_PROJECT_MODE_MONO_REPO == "TRUE" && $CI_APPLICATION_TYPE_MAVEN == "TRUE" && $CI_RELEASE_TYPE_JIB == "TRUE"'
 
-# Release Front, Maven with Kaniko ------------------------------------------------------------------------------------------------------------------------
+# Release Kaniko ------------------------------------------------------------------------------------------------------------------------
 
 .release_image_kaniko:
   stage: release
@@ -106,7 +106,7 @@ release_kaniko_frontend:
     variables:
       - '$CI_PROJECT_TYPE_FRONTEND == "TRUE" && $CI_RELEASE_TYPE_KANIKO == "TRUE"'
 
-# Deploy ALL -----------------------------------------------------------------------------------------------------------------------------------------
+# Deploy -----------------------------------------------------------------------------------------------------------------------------------------
 
 .deploy:
   stage: deploy
