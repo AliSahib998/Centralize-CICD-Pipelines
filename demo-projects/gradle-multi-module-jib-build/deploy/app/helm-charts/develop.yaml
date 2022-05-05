@@ -100,9 +100,7 @@ istio:
   enabled: false
   hostname: dev-app.local.az
   tls: false
-  certBase64:
-    crt:
-    key:
+  certSecret: <secret>
   routes: 
     - route: /
       service: <service> # .Release.Name

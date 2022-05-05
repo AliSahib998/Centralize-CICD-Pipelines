@@ -6,7 +6,7 @@ Centralize the CI/CD pipelines for Java, React based applications
 Basic settings
 ------------
 * Template jobs for Pipeline (for mono-repo / multi-module projects)
-* Included generation dynamic pipeline for multi-module projects (https://github.com/SamirNabadov/Dynamic-Pipeline-Generation)
+* Included Python script for generation dynamic pipeline for multi-module projects (https://github.com/SamirNabadov/Dynamic-Pipeline-Generation)
 * Helm Charts (Added to the deploy folder inside each project)
 * Used jib and kaniko to build and push images to gitlab registry
 * Demo projects are java, react type projects. (The demo projects do not belong to me, only the CI and CD side)
@@ -91,7 +91,7 @@ Helm Charts
 * When configmap is enabled, it is automatically set to the deployment file in the template
 * To add secrets to the deployment file, they must first be created inside the cluster, then the required data must be set in the values file
 * Consideration of multiple routing in Istio Gateway Virtualservice
-* The TLS have been set up at the Istio gateway (Certificates must be attached in base64 format). It is not the best practice to write certificates clearly in the Values file, it is better to use tools that automatically generate certificates, such as HashiCorp Vault.
+* The TLS have been set up at the Istio gateway (Secret must be created inside the cluster and the name must be specified in the appropriate place in the values file)
 
 __Requirements__
 ------------

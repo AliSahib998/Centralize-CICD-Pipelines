@@ -20,6 +20,6 @@ spec:
       tls:
         mode: SSL
         httpsRedirect: true
-        credentialName: {{ .Release.Name }}
+        credentialName: {{ .Values.istio.certSecret }}
 {{- end }}
 {{- end }}
