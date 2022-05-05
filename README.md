@@ -5,7 +5,7 @@ Centralize the CI/CD pipelines for Java, React based applications on Gitlab
 
 Basic settings
 ------------
-* Template jobs for Pipeline (for mono-repo / multi-module projects)
+* Template jobs have been written for the Pipeline (for mono-repo / multi-module projects)
 * Included Python script for generation dynamic pipeline for multi-module projects (https://github.com/SamirNabadov/Dynamic-Pipeline-Generation)
 * Helm Charts (Added to the deploy folder inside each project)
 * Used jib and kaniko to build and push images to gitlab registry
