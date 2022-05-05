@@ -1,7 +1,7 @@
-__Centralization the CI/CD Pipelines__
+__Centralize the CI/CD Pipelines__
 ================================
 
-Centralize the CI/CD pipelines for Java, React based applications
+Centralize the CI/CD pipelines for Java, React based applications on Gitlab
 
 Basic settings
 ------------
